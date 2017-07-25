@@ -56,8 +56,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     docImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-    writePdfInFile()
+    
     self.dismiss(animated: true, completion: nil)
+    
+    let image = docImageView.image
+    var images = [UIImage]()
+    images.append(image ?? UIImage())
+    writePdfInFile(images: images)
   }
 
   func getDocumentsDirectory() -> URL {
@@ -66,45 +71,58 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     return documentsDirectory
   }
 
-  func writePdfInFile() {
-    //    webView?.pdfView.delegate = self
+  func writePdfInFile(images: [UIImage]) {
     var documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-    //    let data = Data(base64Encoded: (pdfData?.byteCode)!, options: .ignoreUnknownCharacters)
-    let data = (UIImagePNGRepresentation(docImageView.image!))!
 
+    var data = Data()
+    
+    for img in images {
+      let imgData = (UIImagePNGRepresentation(img))
+      data.append(imgData ?? Data())
+    }
+    
     let mutableData = NSMutableData(data: data)
-    for _ in 0..<2 {
-    UIGraphicsBeginPDFContextToData(mutableData, docImageView.bounds, nil)
-    UIGraphicsBeginPDFPage()
+    UIGraphicsBeginPDFContextToData(mutableData, CGRect.zero, nil)
     let pdfContext = UIGraphicsGetCurrentContext()
 
     if (pdfContext == nil)
     {
       return
     }
+    
+    
+    
+    var yAxix = 50
+    for img in images {
+      UIGraphicsBeginPDFPage()
 
-    let font = UIFont(name: "Helvetica Bold", size: 14.0)
+            let imageView = UIImageView(frame: CGRect(x: 50, y: 50, width: 500, height: 500))
+            imageView.image = img
+            imageView.contentMode = .scaleAspectFit
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: 600, height: 600))
+            view.addSubview(imageView)
+            view.layer.render(in: pdfContext!)
 
-    let textRect = CGRect(x: 20, y: docImageView.bounds.size.height - 50, width: docImageView.bounds.size.width, height: 50)
-    let paragraphStyle:NSMutableParagraphStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-    paragraphStyle.alignment = NSTextAlignment.left
-    paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
+      yAxix = yAxix + 20 + 500
 
-    let textColor = UIColor.black
-
-    let textFontAttributes = [
-      NSFontAttributeName: font!,
-      NSForegroundColorAttributeName: textColor,
-      NSParagraphStyleAttributeName: paragraphStyle
-    ]
-
-    let text:NSString = "eSigned By Softcell \n\(Date())" as NSString
-
-    text.draw(in: textRect, withAttributes: textFontAttributes)
-
-    docImageView.layer.render(in: pdfContext!)
+      let font = UIFont(name: "Helvetica Bold", size: 14.0)
       
+      let textRect = CGRect(x: 20, y: 800 - 60, width: 500, height: 60)
+      let paragraphStyle:NSMutableParagraphStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+      paragraphStyle.alignment = NSTextAlignment.left
+      paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
+
+      let textColor = UIColor.black
+
+      let textFontAttributes = [
+        NSFontAttributeName: font!,
+        NSForegroundColorAttributeName: textColor,
+        NSParagraphStyleAttributeName: paragraphStyle
+      ]
+      let text:NSString = "eSigned By Amol Bombe \n\(getCurrentDate())" as NSString
+      text.draw(in: textRect, withAttributes: textFontAttributes)
     }
+
     UIGraphicsEndPDFContext()
     
     var objcBool:ObjCBool = true
@@ -112,7 +130,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let isExist = FileManager.default.fileExists(atPath: documentsPath, isDirectory: &objcBool)
 
     // If the folder with the given path doesn't exist already, create it
-    if isExist == false{
+    if isExist == false {
       do{
         try FileManager.default.createDirectory(atPath: documentsPath, withIntermediateDirectories: true, attributes: nil)
       }catch{
@@ -145,7 +163,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       }
     }
     
-    //    _ = FileManager.default.createFile(atPath: pdfPath, contents: data, attributes: nil)
     debugPrint(pdfPath, terminator: "")
     mutableData.write(toFile: pdfPath, atomically: true)
     
@@ -179,7 +196,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
   }
   
   func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
-    
+  }
+  
+  func getCurrentDate() -> String {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "dd-MM-yyyy h:mm:ss a"
+      let sDate = dateFormatter.string(from: Date())
+      return sDate
   }
 }
-

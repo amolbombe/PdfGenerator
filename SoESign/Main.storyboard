@@ -22,33 +22,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Oi8-ZF-R0p">
-                                <rect key="frame" x="10" y="74" width="268" height="533"/>
+                                <rect key="frame" x="10" y="74" width="355" height="533"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d36-Hz-vNd">
-                                <rect key="frame" x="288" y="325.5" width="77" height="30"/>
-                                <state key="normal" title="Take Photo"/>
-                                <connections>
-                                    <action selector="takePhotoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mrj-eF-Aif"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CV0-Dn-bMG">
-                                <rect key="frame" x="128.5" y="617" width="118" height="30"/>
+                                <rect key="frame" x="192.5" y="617" width="172.5" height="30"/>
                                 <state key="normal" title="e Sign Document"/>
                                 <connections>
                                     <action selector="eSignDocumentTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1GW-dO-8DS"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d36-Hz-vNd">
+                                <rect key="frame" x="10" y="617" width="172.5" height="30"/>
+                                <state key="normal" title="Take Photo"/>
+                                <connections>
+                                    <action selector="takePhotoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mrj-eF-Aif"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="d36-Hz-vNd" firstAttribute="leading" secondItem="Oi8-ZF-R0p" secondAttribute="trailing" constant="10" id="1U5-ZO-6Yd"/>
-                            <constraint firstItem="d36-Hz-vNd" firstAttribute="centerY" secondItem="Oi8-ZF-R0p" secondAttribute="centerY" id="VOK-z8-TpJ"/>
+                            <constraint firstAttribute="trailing" secondItem="CV0-Dn-bMG" secondAttribute="trailing" constant="10" id="BQi-VC-3sz"/>
+                            <constraint firstItem="d36-Hz-vNd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="DDN-6U-xui"/>
+                            <constraint firstItem="CV0-Dn-bMG" firstAttribute="width" secondItem="d36-Hz-vNd" secondAttribute="width" id="Eut-R9-aqU"/>
+                            <constraint firstItem="CV0-Dn-bMG" firstAttribute="leading" secondItem="d36-Hz-vNd" secondAttribute="trailing" constant="10" id="JJV-xa-sY1"/>
+                            <constraint firstItem="CV0-Dn-bMG" firstAttribute="bottom" secondItem="d36-Hz-vNd" secondAttribute="bottom" id="LSj-SY-uCw"/>
+                            <constraint firstItem="CV0-Dn-bMG" firstAttribute="top" secondItem="d36-Hz-vNd" secondAttribute="top" id="Nwu-1F-Vlc"/>
                             <constraint firstItem="Oi8-ZF-R0p" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="Xl4-c1-Tjq"/>
                             <constraint firstItem="CV0-Dn-bMG" firstAttribute="top" secondItem="Oi8-ZF-R0p" secondAttribute="bottom" constant="10" id="eg3-T9-hMf"/>
-                            <constraint firstItem="CV0-Dn-bMG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iPI-5B-BdK"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="CV0-Dn-bMG" secondAttribute="bottom" constant="20" id="imf-Mk-uSx"/>
-                            <constraint firstAttribute="trailing" secondItem="d36-Hz-vNd" secondAttribute="trailing" constant="10" id="jIa-Te-cIa"/>
                             <constraint firstItem="Oi8-ZF-R0p" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="uch-LC-TxT"/>
+                            <constraint firstAttribute="trailing" secondItem="Oi8-ZF-R0p" secondAttribute="trailing" constant="10" id="wcF-4W-9bP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ec6-kZ-UAN"/>
